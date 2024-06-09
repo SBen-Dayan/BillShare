@@ -16,3 +16,7 @@ app.use((_, res, next) => {
 });
 
 app.use('/api', routes);
+
+app.listen(4000, () => {
+    console.log('server listening at port 4000');
+})
