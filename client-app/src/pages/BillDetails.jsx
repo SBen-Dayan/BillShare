@@ -2,9 +2,10 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { formatDate, formatCurrency } from "../formatters";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function BillDetails() {
-    const {billId} = useParams();
+    const { billId } = useParams();
     const [bill, setBill] = useState(null);
     const [participants, setParticipants] = useState([]);
 
@@ -40,6 +41,12 @@ export default function BillDetails() {
                         )}
                     </ul>
                 </div>
+            </div>
+        </div>
+        <br />
+        <div className="row">
+            <div className="offset-md-4 col-md-4">
+                <Link to="/bills" className="btn btn-dark w-100">Back to Bills</Link>
             </div>
         </div>
     </>

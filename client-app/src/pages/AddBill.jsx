@@ -27,7 +27,7 @@ export default function AddBill() {
 
     const onFormSubmit = async e => {
         e.preventDefault();
-        await axios.post('/api/bills/addWithParticipants', { amount: +amount, participantIds: selectedParticipantIds });
+        await axios.post('/api/bills/addWithParticipants', { amount, participantIds: selectedParticipantIds });
         navigate('/bills');
     }
 
@@ -64,5 +64,5 @@ export default function AddBill() {
                 </form>
             </div>
         </div >
-    </ >
+    </>
 }

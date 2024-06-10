@@ -10,6 +10,7 @@ export default function Participants() {
             setParticipants(data);
         })();
     }, [])
+    
     return <>
         <div className="text-center">
             <h2>Participants</h2>

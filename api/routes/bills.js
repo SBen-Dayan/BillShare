@@ -12,8 +12,9 @@ router.get('/getBillAndParticipants/:billId', async (req, res) => {
 })
 
 router.post('/addWithParticipants', async (req, res) => {
-    const billId = await data.addBill(req.body.amount, new Date());
-    await data.addBillParticipants(billId, req.body.participantIds);
+    const {amount, participantIds} = req.body;
+    const billId = await data.addBill(amount, new Date());
+    await data.addBillParticipants(participantIds, billId);
     res.json({});
 })
 

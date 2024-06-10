@@ -26,9 +26,8 @@ const getParticipants = async () => {
 
 const getParticipantsForBill = async billId => {
     await sql.connect(config);
-    const { recordset } = await sql.query`SELECT p.* FROM Participants p
-        JOIN BillParticipants bp ON bp.ParticipantId = p.Id 
-        WHERE bp.BillId = ${billId}`;
+    const { recordset } = await sql.query`SELECT p.* FROM Participants p, BillParticipants bp
+        WHERE p.Id = bp.ParticipantId AND bp.BillId = ${billId}`;
     await sql.close();
     return recordset;
 }
@@ -45,7 +44,7 @@ const getBillsAndParticipantCount = async () => {
 const addBill = async (amount, date) => {
     await sql.connect(config);
     const { recordset } = await sql.query`INSERT INTO Bills (Amount, Date)
-        VALUES (${amount}, ${date}); SELECT SCOPE_IDENTITY() AS 'Id'`;
+        VALUES (${amount}, ${date}) SELECT SCOPE_IDENTITY() AS 'Id'`;
     await sql.close();
     return recordset[0].Id;
 }
@@ -58,8 +57,8 @@ const addParticipant = async ({ name, email }) => {
 }
 
 const addBillParticipants = async (participantIds, billId) => {
-    const pool = await sql.connect(config);
-    const request =  pool.request();
+    const connection = await sql.connect(config);
+    const request =  connection.request();
     let query = 'INSERT INTO BillParticipants (ParticipantId, BillId) VALUES';
     
     for (let i = 0, length = participantIds.length; i < length; i++) {
@@ -82,4 +81,4 @@ module.exports = {
     addBill,
     addParticipant,
     addBillParticipants
-};
+}; 
